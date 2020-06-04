@@ -1,0 +1,73 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<projectstudent.Models.studentnew>
+
+@{
+    ViewBag.Title = "Student Management System";
+}
+
+<h2>DUCKTALE IT</h2>
+
+@using (@Html.BeginForm())
+{
+    @Html.TextBox("search")
+    <input type="submit" value="search" />
+}
+Date : @DateTime.Now
+
+<p>
+    <input type="button" value="Add Student" style="float:right;background-color:cyan" placeholder="Search by Subject" onclick="location.href='@Url.Action("Create", "Student")'" />
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Class)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Marks)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marks)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, search = Request.QueryString["search"] }))
